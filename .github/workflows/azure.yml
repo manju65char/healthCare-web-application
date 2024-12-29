@@ -3,7 +3,7 @@ name: Deploy to Azure Containerized Web App
 on:
   push:
     branches:
-      - master  # Adjusted to use the main branch as the default branch
+      - feature-01  # Adjusted to use the feature branch, adjust as needed
 
 jobs:
   build:
@@ -16,7 +16,8 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v2
         with:
-          java-version: '11'  # Ensure the correct Java version is set
+          java-version: '11'  # Specify Java version
+          distribution: 'adoptopenjdk'  # Specify Java distribution (e.g., 'adoptopenjdk', 'zulu', etc.)
 
       - name: Build, package, and test with Maven
         run: |
