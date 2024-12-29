@@ -3,7 +3,7 @@ name: Deploy to Azure Containerized Web App
 on:
   push:
     branches:
-      - feature-01 # Adjusted to use the main branch as the default branch
+      - feature-01  # Adjusted to use the feature branch, adjust as needed
 
 jobs:
   build:
