@@ -3,7 +3,7 @@ name: Deploy to Azure Containerized Web App
 on:
   push:
     branches:
-      - main  # Adjust to your default branch
+      - master  # Adjust to your default branch
 
 jobs:
   build:
