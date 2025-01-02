@@ -1,46 +1,31 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('SCM checkout or cloning the project') {
-            steps {
-                echo 'you need the specify the github repo'
-            }
-        }
-        stage('build the code') {
-            steps {
-                echo 'mvn clean test package -> it will create the artifact app.jar or war'
-            }
-        }
-        stage('deploying artifact into nexus or jfrog ') {
-            steps {
-                echo 'deploying the app.ja into nexus server'
-            }
-        }
-        stage('docker login ') {
-            steps {
-                echo 'credential of server to loginto docker  '
-            }
-        }
-        stage('docker build ') {
-            steps {
-                echo 'docker build -t manjunathachar/healthcare:v1 .'
-            }
-        }
-        stage('dockerhub login') {
-            steps {
-                echo 'logging into the dockerhub to store the docker image e.i manjunathachar/healthcare:v1'
-            }
-        }
-        stage('dockerhub push') {
-            steps {
-                echo 'docker push  manjunathachar/healthcare:v1 -> to push the image to dockerhub'
-            }
-        }
-        stage('deploying into k8s cluster') {
-            steps {
-                echo 'kubectl apply -f deployment.yaml -> to deploy the containersed app or pod into the cluster'
-            }
-        }
+    agent { 
+        label 'Slave1' 
     }
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "maven-3.8.7"
+    }
+
+    environment {    
+        DOCKERHUB_CREDENTIALS = credentials('dockerloginid')
+    } 
+    
+    stages {
+        stage('SCM Checkout') {
+            steps {
+                // Get some code from a GitHub repository
+                git url: 'https://github.com/manju65char/star-agile-health-care.git'
+            }
+        }
+        stage('Maven Build') {
+            steps {
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+            }
+        }
+
+    }
+
 }
