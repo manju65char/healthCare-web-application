@@ -18,7 +18,7 @@ spec:
       - name: health-care-container
         image: manjunathachar/healthcareapp:latest
         ports:
-        - containerPort: 8080
+        - containerPort: 8082
 ---
 apiVersion: v1
 kind: Service
@@ -32,7 +32,7 @@ spec:
   type: NodePort
   ports:
   - nodePort: 31447
-    port: 8979
-    targetPort: 8979
+    port: 8082
+    targetPort: 8082
 
 
